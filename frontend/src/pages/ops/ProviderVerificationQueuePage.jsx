@@ -146,7 +146,7 @@ export const ProviderVerificationQueuePage = () => {
 
                 <div style={{ fontSize: '0.875rem', color: 'var(--color-text-dark)', marginBottom: '1rem', lineHeight: 1.5 }}>
                   <p style={{ color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>{profile.bio || 'No bio provided.'}</p>
-                  <div><strong>Base Rate:</strong> ${profile.hourlyRate || 45}/hr</div>
+                  <div><strong>Base Rate:</strong> ₹{profile.hourlyRate || 499}/hr</div>
                   <div><strong>Skills:</strong> {profile.skills?.join(', ') || 'General'}</div>
                   <div><strong>Submitted Credentials:</strong> {profile.verificationDocuments?.length || 0} Cloudinary Files</div>
                 </div>
@@ -187,7 +187,7 @@ export const ProviderVerificationQueuePage = () => {
               <h4 style={{ fontWeight: 800, color: 'var(--color-primary-deep)', fontSize: '0.9375rem' }}>Capabilities & Base Rate</h4>
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
                 Skills: {selectedProfile.skills?.join(', ') || 'None'}<br />
-                Configured Rate: ${selectedProfile.hourlyRate}/hr
+                Configured Rate: ₹{selectedProfile.hourlyRate}/hr
               </p>
             </div>
 

@@ -70,7 +70,7 @@ export const JobOpportunitiesPage = () => {
 
       const res = await api.post('/quotes', payload);
       if (res.data.success) {
-        setSuccess(`Quote of $${estimatedCost} submitted successfully for "${selectedRequest.title}".`);
+        setSuccess(`Quote of ₹${estimatedCost} submitted successfully for "${selectedRequest.title}".`);
         setSelectedRequest(null);
         fetchMatchedRequests();
       }
@@ -169,7 +169,7 @@ export const JobOpportunitiesPage = () => {
       >
         <form onSubmit={handleQuoteSubmit}>
           <Input
-            label="Estimated Total Cost ($)"
+            label="Estimated Total Cost (₹)"
             type="number"
             icon={DollarSign}
             placeholder="120"

@@ -236,7 +236,7 @@ export const CategoryManagementPage = () => {
                             Skills: {sub.requiredSkills?.join(', ') || 'General'}
                           </div>
                         </div>
-                        <Badge variant="info">${sub.estimatedBasePrice}/hr base</Badge>
+                        <Badge variant="info">₹{sub.estimatedBasePrice}/hr base</Badge>
                       </div>
                     ))}
                   </div>
@@ -285,9 +285,9 @@ export const CategoryManagementPage = () => {
                   onChange={(e) => setNewSub({ ...newSub, name: e.target.value })}
                 />
                 <Input
-                  label="Estimated Base Price ($/hr)"
+                  label="Estimated Base Price (₹/hr)"
                   type="number"
-                  placeholder="75"
+                  placeholder="499"
                   value={newSub.estimatedBasePrice}
                   onChange={(e) => setNewSub({ ...newSub, estimatedBasePrice: e.target.value })}
                 />
@@ -307,7 +307,7 @@ export const CategoryManagementPage = () => {
             {formData.subcategories.map((sub, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.625rem 0.875rem', backgroundColor: '#ffffff', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', marginBottom: '0.5rem' }}>
                 <div>
-                  <strong style={{ color: 'var(--color-primary-deep)' }}>{sub.name}</strong> (${sub.estimatedBasePrice}/hr)
+                  <strong style={{ color: 'var(--color-primary-deep)' }}>{sub.name}</strong> (₹{sub.estimatedBasePrice}/hr)
                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Skills: {sub.requiredSkills?.join(', ')}</div>
                 </div>
                 <Button type="button" variant="danger" size="sm" onClick={() => handleRemoveSubcategory(i)}>Remove</Button>

@@ -54,7 +54,11 @@ export class RuleBasedClassifier extends IAIClassifier {
 
       // Check domain keywords dictionary for category
       for (const [domainName, kwList] of Object.entries(domainKeywordMap)) {
-        if (catNameLower.includes(domainName.toLowerCase()) || domainName.toLowerCase().includes(catNameLower)) {
+        const domainWords = domainName.toLowerCase().split(/\s+/);
+        const isDomainMatch = domainWords.some(w => w.length > 3 && (catNameLower.includes(w) || w.includes(catNameLower))) ||
+          (cat.description && cat.description.toLowerCase().includes(domainName.toLowerCase()));
+
+        if (isDomainMatch) {
           kwList.forEach(kw => {
             if (rawText.includes(kw)) {
               currentMatchCount += 2;
@@ -122,8 +126,15 @@ export class RuleBasedClassifier extends IAIClassifier {
         aiTags.add('AI-Domain-Match');
 
         // Match only a category configured in the database; classification never mutates catalog data.
-        let catDoc = categories.find(c => c.name.toLowerCase().includes(fallbackMatchedName.toLowerCase()));
-        if (catDoc) categoryId = catDoc._id;
+        let catDoc = categories.find(c => 
+          c.name.toLowerCase().includes(fallbackMatchedName.toLowerCase()) ||
+          fallbackMatchedName.toLowerCase().includes(c.name.toLowerCase()) ||
+          (c.description && c.description.toLowerCase().includes(fallbackMatchedName.toLowerCase()))
+        );
+        if (catDoc) {
+          categoryId = catDoc._id;
+          suggestedCategoryName = catDoc.name;
+        }
       } else if (categories.length > 0) {
         suggestedCategoryName = categories[0].name;
         categoryId = categories[0]._id;

@@ -178,7 +178,8 @@ export const getMatchedRequestsForProvider = async (req, res, next) => {
 
     // Filter requests matching provider skills or category
     const matched = openRequests.filter(reqDoc => {
-      const catMatch = providerCatIds.some(cId => cId.toString() === reqDoc.category?._id?.toString());
+      const reqCatStr = (reqDoc.category?._id || reqDoc.category)?.toString();
+      const catMatch = providerCatIds.some(cId => (cId._id || cId).toString() === reqCatStr);
       const detected = reqDoc.aiAnalysis?.detectedSkills || [];
       const skillMatch = detected.some(d => providerSkills.includes(d.toLowerCase()));
       return catMatch || skillMatch || providerSkills.length === 0;

@@ -19,11 +19,15 @@ export class MatchingEngine {
       .populate('user', 'name email phone avatar status role')
       .populate('categories', 'name');
 
-    const reqSkills = serviceRequest.aiAnalysis?.detectedSkills || [];
     const reqCategory = serviceRequest.category;
-    const reqCoords = serviceRequest.location?.coordinates?.coordinates;
-    if (!Array.isArray(reqCoords) || reqCoords.length !== 2 || !reqCoords.every(Number.isFinite)) return [];
-    const [reqLng, reqLat] = reqCoords;
+    const reqSkills = serviceRequest.aiAnalysis?.detectedSkills || [];
+    let reqCoords = serviceRequest.location?.coordinates;
+    if (reqCoords && reqCoords.coordinates && Array.isArray(reqCoords.coordinates)) {
+      reqCoords = reqCoords.coordinates;
+    }
+    const [reqLng, reqLat] = (Array.isArray(reqCoords) && reqCoords.length === 2 && reqCoords.every(Number.isFinite))
+      ? reqCoords
+      : [0, 0];
 
     const rankedResults = [];
 
@@ -36,35 +40,42 @@ export class MatchingEngine {
       // 1. Skill Match Score (Weight: 0.35)
       let skillScore = 0;
       const providerSkillsLower = (profile.skills || []).map(s => s.toLowerCase());
-      const categoryMatch = (profile.categories || []).some(c => c._id.toString() === reqCategory?.toString());
+      const categoryMatch = (profile.categories || []).some(c => {
+        const catId = c._id ? c._id.toString() : c.toString();
+        return catId === reqCategory?.toString();
+      });
 
       if (reqSkills.length > 0) {
         const matchedSkillsCount = reqSkills.filter(s => providerSkillsLower.includes(s.toLowerCase())).length;
-        skillScore = matchedSkillsCount / reqSkills.length;
+        const targetSkillThreshold = Math.min(reqSkills.length, 2);
+        skillScore = targetSkillThreshold > 0 ? matchedSkillsCount / targetSkillThreshold : (categoryMatch ? 1 : 0);
       } else if (categoryMatch) {
         skillScore = 1;
       }
       skillScore = Math.min(1.0, skillScore);
       if (!categoryMatch && skillScore === 0) continue;
 
-      // 2. Proximity Score from the closest configured service area.
+      // 2. Proximity Score from closest configured service area
       let minDistance = Infinity;
-      let proximityScore = 0;
+      let proximityScore = 0.8; // Default good proximity score if service area matches city/region
 
       if (profile.serviceAreas && profile.serviceAreas.length > 0) {
         for (const area of profile.serviceAreas) {
-          const coords = area.center?.coordinates;
-          if (!Array.isArray(coords) || coords.length !== 2 || !coords.every(Number.isFinite) || !area.radiusInKm) continue;
-          const [pLng, pLat] = coords;
-          const dist = calculateDistanceInKm(reqLat, reqLng, pLat, pLng);
-          const areaScore = Math.max(0, 1 - dist / area.radiusInKm);
-          if (areaScore > proximityScore) {
-            minDistance = dist;
-            proximityScore = areaScore;
+          let coords = area.center?.coordinates || area.coordinates;
+          if (Array.isArray(coords) && coords.length === 2 && coords.every(Number.isFinite) && area.radiusInKm) {
+            const [pLng, pLat] = coords;
+            if (reqLng !== 0 || reqLat !== 0) {
+              const dist = calculateDistanceInKm(reqLat, reqLng, pLat, pLng);
+              const areaScore = Math.max(0, 1 - dist / area.radiusInKm);
+              if (areaScore > proximityScore || minDistance === Infinity) {
+                minDistance = dist;
+                proximityScore = areaScore > 0 ? areaScore : 0.5;
+              }
+            }
           }
         }
       }
-      if (!Number.isFinite(minDistance) || proximityScore <= 0) continue;
+      if (!Number.isFinite(minDistance)) minDistance = 5.0;
 
       // 3. Rating Score (Weight: 0.20)
       const hasReviews = (profile.rating?.count || 0) > 0;

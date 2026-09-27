@@ -301,7 +301,7 @@ export const CustomerRequestsPage = () => {
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-primary-deep)' }}>${q.estimatedCost}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-primary-deep)' }}>₹{q.estimatedCost}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Est. Duration: {q.estimatedDurationHours} hr(s)</div>
                   </div>
                 </div>

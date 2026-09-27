@@ -477,9 +477,9 @@ export const ServicesCatalogPage = () => {
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{Number(item.price) > 0 ? 'Starting at' : 'Pricing'}</div>
                       <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.375rem' }}>
                         <span style={{ fontSize: '1.05rem', fontWeight: 800, color: '#1A2238' }}>
-                          {Number(item.price) > 0 ? `$${item.price}` : 'Quote required'}
+                          {Number(item.price) > 0 ? `₹${item.price}` : 'Quote required'}
                         </span>
-                        {Number(item.originalPrice) > 0 && <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textDecoration: 'line-through' }}>${item.originalPrice}</span>}
+                        {Number(item.originalPrice) > 0 && <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textDecoration: 'line-through' }}>₹{item.originalPrice}</span>}
                       </div>
                     </div>
 
@@ -577,7 +577,7 @@ export const ServicesCatalogPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{Number(selectedServiceDetail.price) > 0 ? 'Starting price' : 'Pricing'}</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A2238' }}>{Number(selectedServiceDetail.price) > 0 ? `$${selectedServiceDetail.price}` : 'Quote required'}</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1A2238' }}>{Number(selectedServiceDetail.price) > 0 ? `₹${selectedServiceDetail.price}` : 'Quote required'}</div>
               </div>
               <Button
                 onClick={() => {
@@ -665,7 +665,7 @@ export const ServicesCatalogPage = () => {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1A2238' }}>{bookingService.name}</h4>
-                      <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{bookingService.estimatedDuration} • ${bookingService.price} / {bookingService.unit}</p>
+                      <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{bookingService.estimatedDuration} • ₹{bookingService.price} / {bookingService.unit}</p>
                     </div>
                     
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', backgroundColor: 'white', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
@@ -702,7 +702,7 @@ export const ServicesCatalogPage = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem' }}>
                   <div>
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Subtotal</span>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A2238' }}>${(bookingService.price * quantity).toFixed(2)}</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1A2238' }}>₹{(bookingService.price * quantity).toFixed(2)}</div>
                   </div>
                   <Button onClick={() => setBookingStep(2)} icon={ArrowRight} style={{ backgroundColor: '#FF6A3D' }}>
                     Continue to Schedule
@@ -818,7 +818,7 @@ export const ServicesCatalogPage = () => {
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                     <span>{bookingService.name} ({quantity}x)</span>
-                    <span style={{ fontWeight: 700 }}>${(bookingService.price * quantity).toFixed(2)}</span>
+                    <span style={{ fontWeight: 700 }}>₹{(bookingService.price * quantity).toFixed(2)}</span>
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '0.5rem', color: 'var(--text-muted)' }}>
@@ -839,7 +839,7 @@ export const ServicesCatalogPage = () => {
                   <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: '1rem', fontWeight: 800, color: '#1A2238' }}>Total Payable Amount</span>
                     <span style={{ fontSize: '1.375rem', fontWeight: 800, color: '#FF6A3D' }}>
-                      ${(bookingService.price * quantity).toFixed(2)}
+                      ₹{(bookingService.price * quantity).toFixed(2)}
                     </span>
                   </div>
                 </Card>
@@ -899,7 +899,7 @@ export const ServicesCatalogPage = () => {
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
                     <span style={{ color: 'var(--text-muted)' }}>Total Agreed Rate:</span>
-                    <span style={{ fontWeight: 800, color: '#FF6A3D' }}>${bookingSuccess.totalPrice}</span>
+                    <span style={{ fontWeight: 800, color: '#FF6A3D' }}>₹{bookingSuccess.totalPrice}</span>
                   </div>
                 </Card>
 

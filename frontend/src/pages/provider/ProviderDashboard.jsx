@@ -126,9 +126,9 @@ export const ProviderDashboard = () => {
             </div>
             <div>
               <div style={{ fontSize: '1.875rem', fontFamily: 'var(--font-serif)', color: 'var(--color-primary-deep)', fontWeight: 400, lineHeight: 1.1 }}>
-                {loading ? '...' : `$${totalEarningsEst}`}
+                {loading ? '...' : `₹${totalEarningsEst}`}
               </div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 700 }}>Month's Earnings ($)</div>
+              <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 700 }}>Month's Earnings (₹)</div>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ export const ProviderDashboard = () => {
                 <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Configured default rate</div>
               </div>
               <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                ${profile?.hourlyRate || 45}/hr
+                ₹{profile?.hourlyRate || 499}/hr
               </div>
             </div>
 

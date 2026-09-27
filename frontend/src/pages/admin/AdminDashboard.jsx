@@ -149,7 +149,7 @@ export const AdminDashboard = () => {
                 </div>
                 <div>
                   <div style={{ fontSize: '1.875rem', fontFamily: 'var(--font-serif)', color: 'var(--color-primary-deep)', fontWeight: 400, lineHeight: 1.1 }}>
-                    ${analytics?.financials?.totalGMV || 0}
+                    ₹{analytics?.financials?.totalGMV || 0}
                   </div>
                   <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 700 }}>Total GMV Volume</div>
                 </div>
@@ -179,7 +179,7 @@ export const AdminDashboard = () => {
                 </div>
                 <div style={{ padding: '1rem', backgroundColor: '#ffffff', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                   <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 700 }}>Platform Revenue (Fees)</div>
-                  <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--color-accent)' }}>${analytics?.financials?.platformFees || 0}</div>
+                  <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--color-accent)' }}>₹{analytics?.financials?.platformFees || 0}</div>
                   <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-muted)' }}>From {analytics?.financials?.paidInvoicesCount || 0} Paid Invoices</div>
                 </div>
               </div>

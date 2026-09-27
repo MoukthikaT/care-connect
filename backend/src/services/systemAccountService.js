@@ -10,9 +10,10 @@ const SYSTEM_ACCOUNTS = [
 export const ensureSystemAccounts = async () => {
   for (const account of SYSTEM_ACCOUNTS) {
     const email = account.email.toLowerCase();
-    const existingUser = await User.findOne({ email });
+    const password = process.env[account.passwordEnv];
+    const existingUser = await User.findOne({ email }).select('+password');
+
     if (!existingUser) {
-      const password = process.env[account.passwordEnv];
       if (!password) {
         console.warn(`[System Account] Skipped provisioning ${email}: ${account.passwordEnv} is not configured.`);
         continue;
@@ -28,10 +29,26 @@ export const ensureSystemAccounts = async () => {
       console.log(`[System Account] Created: ${email}`);
       continue;
     }
+
+    let modified = false;
     if (existingUser.role !== account.role) {
       existingUser.role = account.role;
-      await existingUser.save();
+      modified = true;
     }
-    console.log(`[System Account] Ready: ${email}`);
+
+    if (password) {
+      const isMatch = await existingUser.comparePassword(password);
+      if (!isMatch) {
+        existingUser.password = password;
+        modified = true;
+      }
+    }
+
+    if (modified) {
+      await existingUser.save();
+      console.log(`[System Account] Updated credentials for: ${email}`);
+    } else {
+      console.log(`[System Account] Ready: ${email}`);
+    }
   }
 };

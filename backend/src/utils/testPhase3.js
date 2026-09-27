@@ -80,6 +80,7 @@ async function runPhase3Tests() {
     // Setup test users & category
     await User.deleteMany({ email: /@testphase3\.com$/ });
     await ServiceCategory.deleteMany({ name: /Phase3Plumbing/ });
+    await ServiceRequest.deleteMany({ title: 'Kitchen Pipe Leaking Water' });
 
     const category = await ServiceCategory.create({
       name: 'Phase3Plumbing',

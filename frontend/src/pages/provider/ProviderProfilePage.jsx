@@ -251,7 +251,7 @@ export const ProviderProfilePage = () => {
             />
 
             <Input
-              label="Hourly Service Rate ($/hr)"
+              label="Hourly Service Rate (₹/hr)"
               type="number"
               icon={DollarSign}
               placeholder="65"

@@ -116,7 +116,7 @@ export const ProviderQuotesPage = () => {
                       {q.serviceRequest?.title || 'Service Job Proposal'}
                     </span>
                     <h3 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-serif)', color: 'var(--color-primary-deep)', fontWeight: 400 }}>
-                      ${q.estimatedCost}
+                      ₹{q.estimatedCost}
                     </h3>
                   </div>
 
@@ -137,7 +137,7 @@ export const ProviderQuotesPage = () => {
                       <CalendarCheck size={16} /> Job Confirmed & Booking Active
                     </div>
                     <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-dark)', marginTop: '0.25rem' }}>
-                      Agreed Rate: <strong>${q.estimatedCost}</strong> | Customer address and dispatch schedule confirmed.
+                      Agreed Rate: <strong>₹{q.estimatedCost}</strong> | Customer address and dispatch schedule confirmed.
                     </div>
                   </div>
                 )}
